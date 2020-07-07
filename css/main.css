@@ -1,0 +1,57 @@
+h1 {
+    font-family: 'Roboto';
+    text-align: center;
+}
+
+/* body {
+    margin-top: 10em;
+} */
+
+body.mainContainer {
+    margin: 0 24vw;
+}
+
+header {
+    padding: 2em;
+}
+
+footer {
+    height: 400px;
+}
+
+section#add-account {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    body.mainContainer {
+        margin: 0;
+    }
+    
+    section.operations-container {
+        margin: 1.5em 2em;
+        margin-bottom: 2em;
+    }
+
+    table {
+        table-layout: fixed;
+        width: 100%;
+        font-size: 0.6em;        
+    }
+
+    i#edit, i#del, i#accept {
+        font-size: 1.5em;
+    }
+
+    i {
+        font-size: 1.2em;
+    }
+
+    th.table-buttons {
+        width: 8vw;
+    }
+
+    th#table-number {
+        width: 5vw;
+    }
+}
