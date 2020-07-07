@@ -1,4 +1,4 @@
-# Countfin App - Accounting control made easy
+# Countfin App - Simple for account management
 
 This app is made with vanilla JavaScript for study purposes. Also props to @bradtraversy and his youtube channel, Traversy Media, which helped me with the core functionality (adding itens to the list).
 
