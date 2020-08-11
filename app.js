@@ -188,17 +188,24 @@ class UI {
     static pageNavigator(ev) {
         ev.preventDefault();
         switch(ev.target.id) {
+            case 'nav-home':
+                document.getElementById('home-dashboard').style.display = 'block';                    
+                document.getElementById('search-account').style.display = 'none';     
+                document.getElementById('add-account').style.display = 'none';           
+                break;
             case 'nav-procurar':                
-                document.getElementById('add-account').style.display = 'none';
+                document.getElementById('home-dashboard').style.display = 'none';                    
                 document.getElementById('search-account').style.display = 'block';
+                document.getElementById('add-account').style.display = 'none';                
                 break;
             case 'nav-adicionar':
-                document.getElementById('add-account').style.display = 'block';
+                document.getElementById('home-dashboard').style.display = 'none';                
                 document.getElementById('search-account').style.display = 'none';
+                document.getElementById('add-account').style.display = 'block';                
                 break;
             case 'nav-sobre':
                 // console.log('Sobre o app') Ainda vou inserir uma página;
-                break
+                break            
             default:
                 console.warn('Erro no pageSection(ev)');
                 break;

@@ -19,7 +19,7 @@ footer {
     height: 400px;
 }
 
-section#add-account {
+section#add-account, section#search-account {
     display: none;
 }
 
