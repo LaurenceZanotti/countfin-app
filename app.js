@@ -29,7 +29,7 @@ class UI {
             <td class="account-value-cell">${conta.accountValue}</td>
             <td class="account-due-cell">${conta.accountDue}</td>
             <td class="account-paydate-cell">${conta.accountPayDate}</td>
-            <td class="account-delete-cell"><a href="#" title="Deletar"><i class="fa fa-close" id="del"></i></a></td>
+            <td class="account-delete-cell"><a href="#" title="Deletar"><i class="fa fa-close text-danger" id="del"></i></a></td>
             <td class="account-edit-cell"><a href="#" title="Editar"><i class="edit-button fa fa-pencil-square" id="edit"></i></a></td>
         `;
 
@@ -223,6 +223,60 @@ class UI {
             }
         }
     }
+
+    /**
+     * Loads the default dashboard values. Used when DOM is loaded.
+     */
+    static loadDashboard() {
+        // Gets the month select element and current month
+        const selector = document.querySelector('select#dashboard-month-selector');        
+        const month = new Date().getMonth();                
+
+        // 
+        for (let i = 0; i < selector.options.length; i++) {
+            if (selector.options[i].index == month) {                       
+                selector.options[i].setAttribute('selected', '');
+                document.querySelector('section#home-dashboard h2 span').textContent = selector.value;
+            }
+        }
+
+        UI.showMonthExpenses(month);
+    }    
+
+    static showMonthExpenses(month) {
+        const freeBalanceLabel = document.querySelector('span#free-balance-label');
+        const expenseLabel = document.querySelector('span#expense-sum-label');
+        const personalBalanceLabel = document.querySelector('span#personal-balance-label');
+        const year = new Date().getFullYear();
+        const balance = 7000; // A future implementation: change the month's balance
+
+        // Retrieves the accounts data
+        const account = Store.getAccounts();
+
+        // Gets the sum of the month
+        let summ = 0;        
+
+        account.forEach((eachAccount) => {
+            if (eachAccount.accountDue.includes(`${month + 1}-${year}`)) {
+                summ += eachAccount.accountValue;
+            }                       
+        });
+        
+        // Styles the free balance label
+        if (balance - summ <= 0) {
+            freeBalanceLabel.style.color = 'red'      
+            freeBalanceLabel.nextElementSibling.textContent = ' em débito...'      
+        } else {
+            freeBalanceLabel.style.color = 'green'
+            freeBalanceLabel.nextElementSibling.textContent = ' para gastar ou salvar'      
+        }
+
+        // Sets labels content        
+        freeBalanceLabel.textContent = `R$ ${(balance - summ).toFixed(2)}`;
+        expenseLabel.textContent = `R$ ${summ.toFixed(2)}`;
+        personalBalanceLabel.textContent = `R$ ${balance.toFixed(2)}`;        
+        
+    }
 }
 
 // Store Class: Handles storage
@@ -272,8 +326,10 @@ class Store {
     }
 }
 
-// Event: Display account
-document.addEventListener('DOMContentLoaded', UI.displayAccounts());
+// Event: On page loaded, display account
+document.addEventListener('DOMContentLoaded', 
+UI.displayAccounts(),
+UI.loadDashboard());
 
 // Event: Add an account
 document.querySelector('#account-form').addEventListener('submit', function(e)
@@ -329,3 +385,8 @@ document.querySelector('input[type=search]').addEventListener('keyup', function(
     UI.searchAccount(e.target.value);
 });
 
+// Event: Month select input
+document.querySelector('button#month-select-button').addEventListener('click', () => {
+    const month = document.querySelector('select#dashboard-month-selector').selectedIndex;
+    UI.showMonthExpenses(month)
+})

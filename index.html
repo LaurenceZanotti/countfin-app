@@ -55,27 +55,35 @@
         <!-- ######################## -->
 
         <section class="operations-container" id="home-dashboard">
-            <select name="" class="custom-select mt-4 mb-4" id="dashboard-month">
-                <option selected>Escolha um mês...</option>
-                <option value="janeiro">Janeiro</option>
-                <option value="fevereiro">Fevereiro</option>
-                <option value="março">Março</option>
-                <option value="abril">Abril</option>
-                <option value="maio">Maio</option>
-                <option value="junho">Junho</option>
-                <option value="julho">Julho</option>
-                <option value="agosto">Agosto</option>
-                <option value="setembro">Setembro</option>
-                <option value="outubro">Outubro</option>
-                <option value="novembro">Novembro</option>
-                <option value="dezembro">Dezembro</option>
-            </select>
 
-            <p>No mês de <span>Janeiro</span> você tem</p> 
+            <h2 class="mb-4">No mês de <span>Janeiro</span> você tem:</h2> 
 
-            <p>Label Free balance</p> <!-- sum of expenses minus personal balance of the month -->
-            <p>Label Sum of expenses</p> <!-- sum of expenses of the month -->
-            <p>Label personal balance</p> <!-- month's initial balance -->
+            <p><span class="dashboard-label" id="free-balance-label">R$ 0.00</span><span>em débito</span></p> <!-- sum of expenses minus personal balance of the month -->
+            <p><span class="dashboard-label" id="expense-sum-label">R$ 0.00</span> para pagar</p> <!-- sum of expenses of the month -->
+            <p><span class="dashboard-label" id="personal-balance-label">R$ 0.00</span> de salário</p> <!-- month's initial balance -->
+            
+            <label for="dashboard-month-selector">Qual mês você deseja ver?</label>
+
+            <div class="input-group">
+                <select name="" class="custom-select" id="dashboard-month-selector">      
+                    <!-- <option value="todos">Todos</option>           -->
+                    <option value="janeiro">Janeiro</option>
+                    <option value="fevereiro">Fevereiro</option>
+                    <option value="março">Março</option>
+                    <option value="abril">Abril</option>
+                    <option value="maio">Maio</option>
+                    <option value="junho">Junho</option>
+                    <option value="julho">Julho</option>
+                    <option value="agosto">Agosto</option>
+                    <option value="setembro">Setembro</option>
+                    <option value="outubro">Outubro</option>
+                    <option value="novembro">Novembro</option>
+                    <option value="dezembro">Dezembro</option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="month-select-button"><i class="fas fa-check"></i></button>
+                </div>
+            </div>
 
         </section>
 
