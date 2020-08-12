@@ -345,7 +345,7 @@ document.querySelector('#account-form').addEventListener('submit', function(e)
         accountId = accountId.rowIndex + 1;
     }    
     const accountName = document.querySelector('#account-name').value;
-    const accountValue = document.querySelector('#account-value').value;
+    const accountValue = document.querySelector('#account-value').value * 1;
     const accountDue = document.querySelector('#account-due').value;
     const accountPayDate = document.querySelector('#account-payment-date').value;
     
