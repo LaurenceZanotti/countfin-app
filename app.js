@@ -1,3 +1,7 @@
+import moment from './node_modules/moment/dist/moment.js';
+let dateTest = new Date();
+console.log(moment().format('D-MM-YYYY'));
+
 // Account class: represents an account
 
 class Conta {
@@ -326,6 +330,16 @@ class Store {
     }
 }
 
+class DateFormat {
+    static getDate(date) {
+        if (date == '') {
+            return '';
+        } else {
+            return moment(date).format('DD/MM/YYYY');
+        }
+    }
+}
+
 // Event: On page loaded, display account
 document.addEventListener('DOMContentLoaded', 
 UI.displayAccounts(),
@@ -345,10 +359,11 @@ document.querySelector('#account-form').addEventListener('submit', function(e)
         accountId = accountId.rowIndex + 1;
     }    
     const accountName = document.querySelector('#account-name').value;
-    const accountValue = document.querySelector('#account-value').value * 1;
-    const accountDue = document.querySelector('#account-due').value;
-    const accountPayDate = document.querySelector('#account-payment-date').value;
-    
+    const accountValue = document.querySelector('#account-value').value * 1;    
+    const accountDue = DateFormat.getDate(document.querySelector('#account-due').value);
+    const accountPayDate = DateFormat.getDate(document.querySelector('#account-payment-date').value);
+
+
     // Validation
     if (accountName === '' || accountValue === '') {
         UI.showAlert('Há campos que precisam ser preenchidos', 'danger')
