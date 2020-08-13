@@ -1,6 +1,4 @@
 import moment from './node_modules/moment/dist/moment.js';
-let dateTest = new Date();
-console.log(moment().format('D-MM-YYYY'));
 
 // Account class: represents an account
 
@@ -234,9 +232,9 @@ class UI {
     static loadDashboard() {
         // Gets the month select element and current month
         const selector = document.querySelector('select#dashboard-month-selector');        
-        const month = new Date().getMonth();                
+        const month = new Date().getMonth() + 1; //+1 because months are counted from 0 to 11, 0 being January and 11 being December
 
-        // 
+        // Sets dashboard labels to display the current month
         for (let i = 0; i < selector.options.length; i++) {
             if (selector.options[i].index == month) {                       
                 selector.options[i].setAttribute('selected', '');
@@ -248,9 +246,11 @@ class UI {
     }    
 
     static showMonthExpenses(month) {
+        // Dashboard Labels
         const freeBalanceLabel = document.querySelector('span#free-balance-label');
         const expenseLabel = document.querySelector('span#expense-sum-label');
         const personalBalanceLabel = document.querySelector('span#personal-balance-label');
+        // Current year and balance
         const year = new Date().getFullYear();
         const balance = 7000; // A future implementation: change the month's balance
 
@@ -259,14 +259,22 @@ class UI {
 
         // Gets the sum of the month
         let summ = 0;        
-
-        account.forEach((eachAccount) => {
-            if (eachAccount.accountDue.includes(`${month + 1}-${year}`)) {
-                summ += eachAccount.accountValue;
-            }                       
-        });
+        if (month == 0) {
+            account.forEach((eachAccount) => {                
+                summ += eachAccount.accountValue;                
+            });
+            freeBalanceLabel.parentElement.style.display = 'none';
+        } else {
+            freeBalanceLabel.parentElement.style.display = 'block';
+            account.forEach((eachAccount) => {
+                if (eachAccount.accountDue.includes(`${month}/${year}`)) {
+                    summ += eachAccount.accountValue;
+                }                       
+            });
+        }
         
-        // Styles the free balance label
+        
+        // Styles the free balance label according to the balance's situation
         if (balance - summ <= 0) {
             freeBalanceLabel.style.color = 'red'      
             freeBalanceLabel.nextElementSibling.textContent = ' em débito...'      
@@ -330,7 +338,7 @@ class Store {
     }
 }
 
-class DateFormat {
+class DataValidation {
     static getDate(date) {
         if (date == '') {
             return '';
@@ -360,8 +368,8 @@ document.querySelector('#account-form').addEventListener('submit', function(e)
     }    
     const accountName = document.querySelector('#account-name').value;
     const accountValue = document.querySelector('#account-value').value * 1;    
-    const accountDue = DateFormat.getDate(document.querySelector('#account-due').value);
-    const accountPayDate = DateFormat.getDate(document.querySelector('#account-payment-date').value);
+    const accountDue = DataValidation.getDate(document.querySelector('#account-due').value);
+    const accountPayDate = DataValidation.getDate(document.querySelector('#account-payment-date').value);
 
 
     // Validation
@@ -377,6 +385,9 @@ document.querySelector('#account-form').addEventListener('submit', function(e)
 
         // Add book to store
         Store.addAccounts(account);
+
+        // Update dashboard
+        UI.showMonthExpenses(new Date().getMonth() + 1);
 
         // Clear fields
         UI.clearFields();
