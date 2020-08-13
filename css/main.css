@@ -19,8 +19,16 @@ footer {
     height: 400px;
 }
 
-section#add-account {
+section#add-account, section#search-account {
     display: none;
+}
+
+span.dashboard-label {
+    font-size: 1.6em;
+}
+
+label[for=dashboard-month-selector] {    
+    margin-top: 1.1em;
 }
 
 @media (max-width: 768px) {

@@ -35,6 +35,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a href="#" class="nav-link" id="nav-home">Home</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link" id="nav-procurar">Procurar</a>
                     </li>
                     <li class="nav-item">
@@ -46,6 +49,43 @@
                 </ul>                
             </div>            
         </nav>
+
+        <!-- ######################## -->
+        <!-- #### Home dashboard #### -->
+        <!-- ######################## -->
+
+        <section class="operations-container" id="home-dashboard">
+
+            <h2 class="mb-4">No mês de <span>Janeiro</span> você tem:</h2> 
+
+            <p><span class="dashboard-label" id="free-balance-label">R$ 0.00</span><span> em débito</span></p> <!-- sum of expenses minus personal balance of the month -->
+            <p><span class="dashboard-label" id="expense-sum-label">R$ 0.00</span> para pagar</p> <!-- sum of expenses of the month -->
+            <p><span class="dashboard-label" id="personal-balance-label">R$ 0.00</span> de salário</p> <!-- month's initial balance -->
+            
+            <label for="dashboard-month-selector">Qual mês você deseja ver?</label>
+
+            <div class="input-group">
+                <select name="" class="custom-select" id="dashboard-month-selector">      
+                    <!-- <option value="todos">Todos</option>           -->
+                    <option value="janeiro">Janeiro</option>
+                    <option value="fevereiro">Fevereiro</option>
+                    <option value="março">Março</option>
+                    <option value="abril">Abril</option>
+                    <option value="maio">Maio</option>
+                    <option value="junho">Junho</option>
+                    <option value="julho">Julho</option>
+                    <option value="agosto">Agosto</option>
+                    <option value="setembro">Setembro</option>
+                    <option value="outubro">Outubro</option>
+                    <option value="novembro">Novembro</option>
+                    <option value="dezembro">Dezembro</option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="month-select-button"><i class="fas fa-check"></i></button>
+                </div>
+            </div>
+
+        </section>
 
         <!-- ########################## -->
         <!-- #### Adicionar contas #### -->
@@ -63,11 +103,11 @@
                 </div>
                 <div class="form-group">
                     <label for="account-due">Vencimento</label>
-                    <input type="date" name="vencimento" id="account-due" class="form-control">
+                    <input type="date" name="vencimento" id="account-due" class="form-control" min="1900-01-01" max="2200-12-30">
                 </div>
                 <div class="form-group">
                     <label for="account-payment-date">Data de pagamento</label>
-                    <input type="date" name="pagamento" id="account-payment-date" class="form-control">
+                    <input type="date" name="pagamento" id="account-payment-date" class="form-control" min="1900-01-01" max="2200-12-30">
                 </div>
                 <input type="submit" value="Adicionar conta" class="btn btn-primary btn-block mt-4">                
             </form>            
@@ -119,8 +159,9 @@
         <footer>
 
         </footer>
-
-        <script src="app.js"></script>
+        
+        <script src="./node_modules/moment/moment.js"></script>
+        <script type="module" src="app.js"></script>        
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
