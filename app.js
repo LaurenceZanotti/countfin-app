@@ -1,6 +1,4 @@
 import moment from './node_modules/moment/dist/moment.js';
-let dateTest = new Date();
-console.log(moment().format('D-MM-YYYY'));
 
 // Account class: represents an account
 
@@ -116,7 +114,7 @@ class UI {
                         accountName = selectedRow[i].textContent;
                         break;
                     case 2:
-                        accountValue = selectedRow[i].textContent;
+                        accountValue = selectedRow[i].textContent * 1;
                         break;
                     case 3:
                         accountDue = selectedRow[i].textContent;
@@ -141,28 +139,7 @@ class UI {
             el.remove();
         }
     }
-
-    static dataFormat(td) {
-        // Protótipo da função que vai formatar as edições na linha da tabela a ser editada para evitar erros de formatação        
-        // Vai checar qual tipo de dado é: string, number, date.
-        let isCorrect = false;
-        const stringTest = td.toString;
-        const numTest = new Number(td);
-        const dateTest = new Date(td);
-
-        // if string
-
-        // if number https://www.w3schools.com/jsref/jsref_isnan.asp
-        if (isNaN(numTest) == true) { // 
-            return true;
-        } else if (dateTest == 'Invalid Date') { // if date https://medium.com/@esganzerla/simple-date-validation-with-javascript-caea0f71883c
-            return false;
-        } else if (stringTest) {  // https://stackoverflow.com/questions/10950538/how-to-detect-line-breaks-in-a-text-area-input 
-
-        }
-
-    }
-
+    
     static showAlert(message, className) {               
         const div = document.createElement('div');
         div.className = `alert alert-${className}`;
@@ -234,7 +211,7 @@ class UI {
     static loadDashboard() {
         // Gets the month select element and current month
         const selector = document.querySelector('select#dashboard-month-selector');        
-        const month = new Date().getMonth();                
+        const month = new Date().getMonth() + 1;                
 
         // 
         for (let i = 0; i < selector.options.length; i++) {
@@ -248,6 +225,7 @@ class UI {
     }    
 
     static showMonthExpenses(month) {
+        const header = document.querySelector('section#home-dashboard h2');
         const freeBalanceLabel = document.querySelector('span#free-balance-label');
         const expenseLabel = document.querySelector('span#expense-sum-label');
         const personalBalanceLabel = document.querySelector('span#personal-balance-label');
@@ -259,20 +237,41 @@ class UI {
 
         // Gets the sum of the month
         let summ = 0;        
-
-        account.forEach((eachAccount) => {
-            if (eachAccount.accountDue.includes(`${month + 1}-${year}`)) {
-                summ += eachAccount.accountValue;
-            }                       
-        });
         
-        // Styles the free balance label
-        if (balance - summ <= 0) {
-            freeBalanceLabel.style.color = 'red'      
-            freeBalanceLabel.nextElementSibling.textContent = ' em débito...'      
+        if (month == 0) { // Updates dashboard with the year statistics
+            account.forEach((eachAccount) => {
+                if (eachAccount.accountDue.includes(`${year}`)) {
+                    summ += eachAccount.accountValue;
+                }
+            });
+
+            header.style.display = 'none';
+            freeBalanceLabel.parentElement.style.display = 'none';
+
+            expenseLabel.nextElementSibling.textContent = ` em contas no ano de ${year}`;
+            expenseLabel.textContent = `R$ ${summ.toFixed(2)}`;
+            return;
         } else {
-            freeBalanceLabel.style.color = 'green'
-            freeBalanceLabel.nextElementSibling.textContent = ' para gastar ou salvar'      
+            account.forEach((eachAccount) => {
+                if (eachAccount.accountDue.includes(`${month}/${year}`)) {
+                    summ += eachAccount.accountValue;
+                }                       
+            });
+
+            header.style.display = 'block';
+            freeBalanceLabel.parentElement.style.display = 'block';
+            expenseLabel.nextElementSibling.textContent = ' em contas';
+        }
+        
+        
+        // Styles the free balance label        
+        if (balance - summ <= 0) {
+            freeBalanceLabel.style.color = 'red';
+            freeBalanceLabel.nextElementSibling.textContent = ' em débito...';
+            
+        } else {
+            freeBalanceLabel.style.color = 'green';
+            freeBalanceLabel.nextElementSibling.textContent = ' para gastar ou salvar';            
         }
 
         // Sets labels content        
@@ -287,7 +286,7 @@ class UI {
 class Store {
     static getAccounts() {
         let account;
-        if (localStorage.getItem('contas') === null) {
+        if (localStorage.getItem('contas') === null || localStorage.getItem('contas') === '') {
             account = [];
         } else {
             account = JSON.parse(localStorage.getItem('contas'));
@@ -330,7 +329,7 @@ class Store {
     }
 }
 
-class DateFormat {
+class DataValidation {
     static getDate(date) {
         if (date == '') {
             return '';
@@ -360,8 +359,8 @@ document.querySelector('#account-form').addEventListener('submit', function(e)
     }    
     const accountName = document.querySelector('#account-name').value;
     const accountValue = document.querySelector('#account-value').value * 1;    
-    const accountDue = DateFormat.getDate(document.querySelector('#account-due').value);
-    const accountPayDate = DateFormat.getDate(document.querySelector('#account-payment-date').value);
+    const accountDue = DataValidation.getDate(document.querySelector('#account-due').value);
+    const accountPayDate = DataValidation.getDate(document.querySelector('#account-payment-date').value);
 
 
     // Validation
@@ -378,6 +377,9 @@ document.querySelector('#account-form').addEventListener('submit', function(e)
         // Add book to store
         Store.addAccounts(account);
 
+        // Updates dashboard        
+        UI.showMonthExpenses(new Date().getMonth() + 1)
+
         // Clear fields
         UI.clearFields();
     }
@@ -388,7 +390,8 @@ document.querySelector('#account-list').addEventListener('click', function(e){
     e.preventDefault();
     UI.deleteAccount(e.target);
     UI.editAccount(e.target);
-    UI.acceptChanges(e.target);
+    UI.acceptChanges(e.target);    
+    UI.showMonthExpenses(new Date().getMonth() + 1)
 });
 
 // Event: Navbar navigation
