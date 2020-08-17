@@ -19,5 +19,7 @@
     "url": "https://github.com/LaurenceZanotti/countfin-app/issues"
   },
   "homepage": "https://github.com/LaurenceZanotti/countfin-app#readme",
-  "dependencies": {}
+  "dependencies": {
+    "moment": "^2.27.0"
+  }
 }
