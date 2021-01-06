@@ -39,11 +39,6 @@ class UI {
     }
 
     static clearFields() {
-        // document.querySelector('#account-name').value = '';
-        // document.querySelector('#account-value').value = '';
-        // document.querySelector('#account-due').value = '';
-        // document.querySelector('#account-payment-date').value = '';
-
         // Better solution for clearing form fields
         document.querySelector('#account-form').reset();
     }
