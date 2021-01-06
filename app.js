@@ -1,7 +1,5 @@
-import moment from './node_modules/moment/dist/moment.js';
 
 // Account class: represents an account
-
 class Conta {
     constructor(accountId, accountName, accountValue, accountDue, accountPayDate){
         this.accountId = accountId;
@@ -317,10 +315,11 @@ class Store {
 
 class DataValidation {
     static getDate(date) {
+        console.log(date)
         if (date == '') {
             return '';
         } else {
-            return moment(date).format('DD/MM/YYYY');
+            return dayjs(date).format('DD/MM/YYYY');
         }
     }
 }
