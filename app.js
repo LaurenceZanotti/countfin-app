@@ -165,24 +165,41 @@ class UI {
 
     static pageNavigator(ev) {
         ev.preventDefault();
+        const home = document.getElementById('home-dashboard')
+        const search = document.getElementById('search-account')
+        const add = document.getElementById('add-account')
+        const about = document.getElementById('about-app')
+        const accounts = document.getElementById('display-list')
+        const menu = [home, search, add, about]
+
+        /**
+         * Esconder todas as seções do site
+         */
+        function hideSections() {
+            menu.forEach(item => {
+                item.style.display = 'none'
+            })
+            accounts.style.display = 'block'
+        }
+
+        // Mostrar seção escolhida pelo user no click (target.id)
         switch(ev.target.id) {
             case 'nav-home':
-                document.getElementById('home-dashboard').style.display = 'block';                    
-                document.getElementById('search-account').style.display = 'none';     
-                document.getElementById('add-account').style.display = 'none';           
+                hideSections()  
+                home.style.display = 'block'
                 break;
-            case 'nav-procurar':                
-                document.getElementById('home-dashboard').style.display = 'none';                    
-                document.getElementById('search-account').style.display = 'block';
-                document.getElementById('add-account').style.display = 'none';                
+            case 'nav-procurar':    
+                hideSections()        
+                search.style.display = 'block'
                 break;
             case 'nav-adicionar':
-                document.getElementById('home-dashboard').style.display = 'none';                
-                document.getElementById('search-account').style.display = 'none';
-                document.getElementById('add-account').style.display = 'block';                
+                hideSections()  
+                add.style.display = 'block';
                 break;
             case 'nav-sobre':
-                // console.log('Sobre o app') Ainda vou inserir uma página;
+                hideSections()
+                about.style.display = 'block';
+                accounts.style.display = 'none'
                 break            
             default:
                 console.warn('Erro no pageSection(ev)');

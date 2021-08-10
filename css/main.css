@@ -19,8 +19,14 @@ footer {
     height: 400px;
 }
 
-section#add-account, section#search-account {
+section#add-account, section#search-account, section#about-app {
     display: none;
+}
+
+.logo {
+    border-radius: 50%;
+    width: 7em;
+    /* margin: 1.5em; */
 }
 
 span.dashboard-label {
