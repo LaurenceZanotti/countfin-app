@@ -1,12 +1,9 @@
-# Countfin App - Simple for account management
+# Countfin App - Simples para controle financeiro
 
-This app is made with vanilla JavaScript for study purposes. Also props to @bradtraversy and his youtube channel, Traversy Media, which helped me with the core functionality (adding and deleting items of the list).
+Este app é feito com JavaScript puro (sem frameworks) para fins de estudo. Também créditos para @bradtraversy e o canal dele no youtube, Traversy Media, que me ajudou com a funcionalidade essencial, como adicionar e deletar items de uma lista no DOM.
 
-After some research I was able to create my first item search feature using MDN JS documentation and other resources. Then added an edit button using the HTML5 attribute contentEditable and interacting with it using JavaScript, indicating the user which line he is editing through UI changes (bootstrap interaction).
+Depois de alguns estudos, fiquei apto a criar minha primeira funcionalidade de busca de contas, usando documentação do MDN sobre JavaScript e outros recursos também. Então adicionei um botão de editar, que habilita editar o conteúdo da conta com o atributo contentEditable do HTML5. A conta era realçado na lista com elementos bootstrap para mostrar que está sendo editado.
 
-I hope to learn tons of fundamentals with this project, and specially get used to Git and Github tools to improve my workflow.
+Este projeto tem me ajudado a aprender muitos conceitos fundamentais e intermediários de programação com JavaScript, e com o passar dos anos, minha visão para esse projeto tem se expandido. Cada feedback seu é extremamente valioso.
 
-Hope to learn more about web development with this project and GitHubs features. Every feedback is extreme valuable.
-;)
-
-You can see the [demo](https://laurencezanotti.github.io/countfin-app/) at GitHub Pages!
+Você pode ver a [demo](https://laurencezanotti.github.io/countfin-app/) no GitHub Pages!
