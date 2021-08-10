@@ -1,5 +1,7 @@
 
-// Account class: represents an account
+/**
+ * Classe Conta: representa uma conta, fatura ou boleto
+ */
 class Conta {
     constructor(accountId, accountName, accountValue, accountDue, accountPayDate){
         this.accountId = accountId;
@@ -10,7 +12,9 @@ class Conta {
     }    
 }
 
-// UI Class: handle UI tasks
+/**
+ * Classe UI: Gerencia tarefas da UI (interface de usuário)
+ */
 class UI {
     static displayAccounts(){
         const contas = Store.getAccounts();
@@ -266,7 +270,9 @@ class UI {
     }
 }
 
-// Store Class: Handles storage
+/**
+ * Class Store: Lida com armazenamento das contas para que os dados possam persistir (no localStorage)
+ */
 class Store {
     static getAccounts() {
         let account;
@@ -313,9 +319,11 @@ class Store {
     }
 }
 
+/**
+ * Class DataValitation: Usada para validar dados, quando postados ou atualizados. (Ex: datas)
+ */
 class DataValidation {
     static getDate(date) {
-        console.log(date)
         if (date == '') {
             return '';
         } else {
@@ -324,53 +332,49 @@ class DataValidation {
     }
 }
 
-// Event: On page loaded, display account
+// Event: Quando página terminar de carregar, também carregar e exibir contas
 document.addEventListener('DOMContentLoaded', 
 UI.displayAccounts(),
 UI.loadDashboard());
 
-// Event: Add an account
+// Event: Adicionar uma conta
 document.querySelector('#account-form').addEventListener('submit', function(e)
 {
-    // Prevent actual submit
+    // Previnir submit padrão do form
     e.preventDefault();
 
-    // Get form values
-    let accountId = document.querySelector('#account-list').lastElementChild;        
-    if(accountId === null) {
-        accountId = 1;
-    } else {
-        accountId = accountId.rowIndex + 1;
-    }    
+    // Obter valores do form
+    let accountId = document.querySelector('#account-list').lastElementChild;   
+    accountId = accountId === null ? 1 : accountId.rowIndex + 1;    
     const accountName = document.querySelector('#account-name').value;
     const accountValue = document.querySelector('#account-value').value * 1;    
     const accountDue = DataValidation.getDate(document.querySelector('#account-due').value);
     const accountPayDate = DataValidation.getDate(document.querySelector('#account-payment-date').value);
 
 
-    // Validation
+    // Alertar campos vazios se nome ou valor da conta não forem preenchidos
     if (accountName === '' || accountValue === '') {
         UI.showAlert('Há campos que precisam ser preenchidos', 'danger')
     } else {
-        // Instantiate account
+        // Criar nova conta
         const account = new Conta(accountId, accountName, accountValue, accountDue, accountPayDate);
 
-        // Add Book to UI
+        // Adicionar livro na UI e exibir alerta
         UI.addAccountToList(account);
         UI.showAlert('Conta adicionada', 'primary');
 
-        // Add book to store
+        // Adicionar conta no localStorage
         Store.addAccounts(account);
 
-        // Update dashboard
+        // Atualizar dashboard
         UI.showMonthExpenses(new Date().getMonth() + 1);
 
-        // Clear fields
+        // Limpar campos
         UI.clearFields();
     }
 });
 
-// Event: Remove or edit an account
+// Event: Remover ou editar uma conta
 document.querySelector('#account-list').addEventListener('click', function(e){
     e.preventDefault();
     UI.deleteAccount(e.target);
@@ -379,16 +383,16 @@ document.querySelector('#account-list').addEventListener('click', function(e){
     UI.showMonthExpenses(new Date().getMonth() + 1)
 });
 
-// Event: Navbar navigation
+// Event: Navegação e opções do menu navbar
 document.querySelector(".navbar-nav").addEventListener('click', (e) => UI.pageNavigator(e));
 
-// Event: Search input update
+// Event: Atualizar lista de contas ao digitar no campo de busca
 document.querySelector('input[type=search]').addEventListener('keyup', function(e){    
     e.preventDefault();
     UI.searchAccount(e.target.value);
 });
 
-// Event: Month select input
+// Event: Atualizar dashboard de acordo com mês escolhido no select
 document.querySelector('button#month-select-button').addEventListener('click', () => {
     const month = document.querySelector('select#dashboard-month-selector').selectedIndex;
     UI.showMonthExpenses(month)
