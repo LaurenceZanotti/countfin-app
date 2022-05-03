@@ -37,6 +37,21 @@ label[for=dashboard-month-selector] {
     margin-top: 1.1em;
 }
 
+#about-container {
+    display: flex;
+}
+
+#about-container > article {
+    text-align: justify;
+    padding: 1em;
+    padding-top: 0;
+}
+
+#about-container > aside {
+    padding: 1em;
+    padding-top: 0;
+}
+
 @media (max-width: 768px) {
     body.mainContainer {
         margin: 0;
@@ -68,4 +83,13 @@ label[for=dashboard-month-selector] {
     th#table-number {
         width: 5vw;
     }
+
+    #about-container {
+        flex-direction: column-reverse;
+    }
+
+    #about-container > aside > h4, a {
+        text-align: center;
+    }
+
 }
